@@ -6,9 +6,8 @@ const formEl = document.querySelector('.feedback-form');
 formEl.addEventListener('input', throttle(handleFormInput, 500));
 formEl.addEventListener('submit', handleFormSubmit);
 
-populateForm();
-
 let formData = {};
+populateForm();
 
 function populateForm() {
   const savedMess = localStorage.getItem(STORAGE_FEEDBACK);
@@ -17,7 +16,9 @@ function populateForm() {
     const parsedData = JSON.parse(savedMess);
     Object.keys(parsedData).map(key => {
       formEl.elements[key].value = parsedData[key];
+      formData[key] = parsedData[key];
     });
+    console.log(formData);
   }
 }
 
@@ -45,4 +46,6 @@ function handleFormSubmit(event) {
   );
   localStorage.removeItem(STORAGE_FEEDBACK);
   event.currentTarget.reset();
+
+  formData = {};
 }
